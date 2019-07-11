@@ -52,7 +52,38 @@ function createCard(props) {
   const card = document.createElement('div')
   const image = document.createElement('img')
   const infoDiv = document.createElement('div')
-  const nameHeader = document.createElement('')
+  const nameHeader = document.createElement('h3')
+  const usernameP = document.createElement('p')
+  const locationP = document.createElement('p')
+  const profileP = document.createElement('p')
+  const githubLink = document.createElement('a')
+  const followersP = document.createElement('p')
+  const followingP = document.createElement('p')
+  const bioP = document.createElement('p')
+
+  // set styles
+  card.classList.add('card')
+  infoDiv.classList.add('card-info')
+  h3.classList.add('name')
+  usernameP.classList.add('username')
+  // set content
+
+  image.src = 'https://placekitten.com/200'
+  h3.textContent = 'Nikema Prophet'
+  usernameP.textContent = 'prophen'
+  locationP.textContent = "Sacramento"
+  profileP.textContent = "Profile: "
+  githubLink.href = 'https://github.com/prophen'
+  githubLink.textContent = githubLink.href
+  followersP.textContent = '100'
+  followingP.textContent = '100'
+  bioP.textContent = 'This is a bio'
+  
+  
+  // put elements together
+
+
+  return card
 }
 /* 
 
@@ -62,7 +93,7 @@ div.card
     h3.name
     p.username
     p {location}
-    p
+    p Profile
       a {github page}
     p {followers count}
     p {following count}
