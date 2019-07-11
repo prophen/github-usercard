@@ -2,6 +2,21 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+window.addEventListener('DOMContentLoaded', () => {
+  const promise = axios.get('https://api.github.com/users/prophen')
+
+  promise
+    .then(data => {
+      // Handles Success: here's where we get the results from server
+      console.log('response', data)
+      
+    })
+    .catch(error => {
+      // Handles failure:
+      console.log('Error', error)
+    })
+})
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
