@@ -48,18 +48,18 @@ function createCard(props) {
   infoDiv.classList.add("card-info");
   nameHeader.classList.add("name");
   usernameP.classList.add("username");
-  
+
   // set content
   image.src = avatar_url;
   nameHeader.textContent = name;
   usernameP.textContent = login;
-  locationP.textContent = (location) ? `Location: ${location}` : "";
+  locationP.textContent = location ? `Location: ${location}` : "";
   profileP.textContent = "Profile: ";
   githubLink.href = html_url;
   githubLink.textContent = githubLink.href;
   followersP.textContent = `Followers: ${followers}`;
   followingP.textContent = `Following: ${following}`;
-  bioP.textContent = `Bio: ${bio}` && "Bio: This is where a bio goes.";
+  bioP.textContent = bio ? `Bio: ${bio}` : "Bio: This is where a bio goes.";
 
   // put elements together
   card.append(image, infoDiv);
