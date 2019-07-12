@@ -53,7 +53,7 @@ function createCard(props) {
   image.src = avatar_url;
   nameHeader.textContent = name;
   usernameP.textContent = login;
-  locationP.textContent = `Location: ${location}`;
+  locationP.textContent = (location) ? `Location: ${location}` : "";
   profileP.textContent = "Profile: ";
   githubLink.href = html_url;
   githubLink.textContent = githubLink.href;
