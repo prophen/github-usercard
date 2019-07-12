@@ -2,20 +2,22 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-window.addEventListener('DOMContentLoaded', () => {
-  const promise = axios.get('https://api.github.com/users/prophen')
+
+  const promise = axios.get("https://api.github.com/users/prophen");
 
   promise
     .then(data => {
       // Handles Success: here's where we get the results from server
-      console.log('response', data)
+      console.log("response", data);
+      console.log('followers', data.data.followers)
+      
+      document.querySelector('.cards').appendChild(createCard(data))
       
     })
     .catch(error => {
       // Handles failure:
-      console.log('Error', error)
-    })
-})
+      console.log("Error", error);
+    });
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -47,44 +49,57 @@ const followersArray = [];
           
 */
 function createCard(props) {
+  
+  console.log(props)
+  const { followers, avatar_url, location, following, html_url, name, login, bio } = props.data
 
   // create DOM elements
-  const card = document.createElement('div')
-  const image = document.createElement('img')
-  const infoDiv = document.createElement('div')
-  const nameHeader = document.createElement('h3')
-  const usernameP = document.createElement('p')
-  const locationP = document.createElement('p')
-  const profileP = document.createElement('p')
-  const githubLink = document.createElement('a')
-  const followersP = document.createElement('p')
-  const followingP = document.createElement('p')
-  const bioP = document.createElement('p')
+  const card = document.createElement("div");
+  const image = document.createElement("img");
+  const infoDiv = document.createElement("div");
+  const nameHeader = document.createElement("h3");
+  const usernameP = document.createElement("p");
+  const locationP = document.createElement("p");
+  const profileP = document.createElement("p");
+  const githubLink = document.createElement("a");
+  const followersP = document.createElement("p");
+  const followingP = document.createElement("p");
+  const bioP = document.createElement("p");
 
   // set styles
-  card.classList.add('card')
-  infoDiv.classList.add('card-info')
-  h3.classList.add('name')
-  usernameP.classList.add('username')
+  card.classList.add("card");
+  infoDiv.classList.add("card-info");
+  nameHeader.classList.add("name");
+  usernameP.classList.add("username");
   // set content
 
-  image.src = 'https://placekitten.com/200'
-  h3.textContent = 'Nikema Prophet'
-  usernameP.textContent = 'prophen'
-  locationP.textContent = "Sacramento"
-  profileP.textContent = "Profile: "
-  githubLink.href = 'https://github.com/prophen'
-  githubLink.textContent = githubLink.href
-  followersP.textContent = '100'
-  followingP.textContent = '100'
-  bioP.textContent = 'This is a bio'
-  
-  
+  image.src = avatar_url
+  nameHeader.textContent = name;
+  usernameP.textContent = login;
+  locationP.textContent = `Location: ${location}`;
+  profileP.textContent = "Profile: ";
+  githubLink.href = html_url
+  githubLink.textContent = githubLink.href;
+  followersP.textContent = `Followers: ${followers}`;
+  followingP.textContent = `Following: ${following}`;
+  bioP.textContent = `Bio: ${bio}` && "Bio: This is where a bio goes.";
+
   // put elements together
-
-
-  return card
+  card.append(image, infoDiv);
+  infoDiv.append(
+    nameHeader,
+    usernameP,
+    locationP,
+    profileP,
+    followersP,
+    followingP,
+    bioP
+  );
+  profileP.append(githubLink);
+  
+  return card;
 }
+
 /* 
 
 div.card
