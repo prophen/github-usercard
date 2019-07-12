@@ -2,56 +2,33 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+fetchUser("https://api.github.com/users/prophen");
+fetchFollowers("https://api.github.com/users/prophen/followers");
 
-  const promise = axios.get("https://api.github.com/users/prophen");
+function fetchUser(endpoint) {
+  const fetchProfile = axios.get(endpoint);
 
-  promise
-    .then(data => {
-      // Handles Success: here's where we get the results from server
-      console.log("response", data);
-      console.log('followers', data.data.followers)
-      
-      document.querySelector('.cards').appendChild(createCard(data))
-      
+  fetchProfile
+    .then(user => {
+      document.querySelector(".cards").appendChild(createCard(user));
     })
     .catch(error => {
       // Handles failure:
       console.log("Error", error);
     });
+}
 
-
-/* Step 2: Inspect and study the data coming back, this is YOUR 
-   github info! You will need to understand the structure of this 
-   data in order to use it to build your component function 
-
-   Skip to Step 3.
-*/
-
-/* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
-*/
-
-/* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
-          , manually find some other users' github handles, or use the list found 
-          at the bottom of the page. Get at least 5 different Github usernames and add them as
-          Individual strings to the friendsArray below.
-          
-          Using that array, iterate over it, requesting data for each user, creating a new card for each
-          user, and adding that card to the DOM.
-*/
-
-const followersArray = [];
-
-/* Step 3: Create a function that accepts a single object as its only argument,
-          Using DOM methods and properties, create a component that will return the following DOM element:
-
-          
-*/
 function createCard(props) {
-  
-  console.log(props)
-  const { followers, avatar_url, location, following, html_url, name, login, bio } = props.data
+  const {
+    followers,
+    avatar_url,
+    location,
+    following,
+    html_url,
+    name,
+    login,
+    bio
+  } = props.data;
 
   // create DOM elements
   const card = document.createElement("div");
@@ -71,14 +48,14 @@ function createCard(props) {
   infoDiv.classList.add("card-info");
   nameHeader.classList.add("name");
   usernameP.classList.add("username");
+  
   // set content
-
-  image.src = avatar_url
+  image.src = avatar_url;
   nameHeader.textContent = name;
   usernameP.textContent = login;
   locationP.textContent = `Location: ${location}`;
   profileP.textContent = "Profile: ";
-  githubLink.href = html_url
+  githubLink.href = html_url;
   githubLink.textContent = githubLink.href;
   followersP.textContent = `Followers: ${followers}`;
   followingP.textContent = `Following: ${following}`;
@@ -96,12 +73,25 @@ function createCard(props) {
     bioP
   );
   profileP.append(githubLink);
-  
   return card;
 }
 
-/* 
+function fetchFollowers(endpoint) {
+  axios
+    .get(endpoint)
+    .then(followersData => {
+      const followersArray = followersData.data;
+      followersArray.forEach(follower => {
+        fetchUser(`https://api.github.com/users/${follower.login}`);
+      });
+    })
+    .catch(error => {
+      // Handles failure:
+      console.log("Error", error);
+    });
+}
 
+/* 
 div.card
   img
   div.card-info
@@ -116,29 +106,18 @@ div.card
 
 <div class="card">
   <img src={image url of user} />
-
   <div class="card-info">
-  
     <h3 class="name">{users name}</h3>
-  
     <p class="username">{users user name}</p>
-  
     <p>Location: {users location}</p>
-
     <p>Profile:  
-  
       <a href={address to users github page}>{address to users github page}</a>
     </p>
-  
     <p>Followers: {users followers count}</p>
-  
     <p>Following: {users following count}</p>
-  
     <p>Bio: {users bio}</p>
   </div>
 </div>
-
-
 */
 
 /* List of LS Instructors Github username's: 
